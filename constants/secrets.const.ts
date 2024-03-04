@@ -1,4 +1,7 @@
+import { config } from "dotenv";
 import { Environments } from "../schema/enums/env.enum";
+
+config({});
 
 const {
   DATABASE_URL,

@@ -1,0 +1,16 @@
+openapi: 3.0.0
+servers:
+  - url: http://localhost:3001
+    description: local server
+
+info:
+  title: Event Sync API
+  description: API for an event management, booking and ticketing system
+  version: 1.0.0
+
+component:
+  schemas:
+
+tags:
+  - name: auth
+  - name: user
