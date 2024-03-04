@@ -42,9 +42,9 @@ const secrets = {
 
   nodeEnv: <string | Environments>NODE_ENV,
   redis: {
-    host: REDIS_HOST,
-    port: REDIS_PORT,
-    password: REDIS_PASSWORD,
+    host: <string>REDIS_HOST,
+    port: <string | number>REDIS_PORT,
+    password: <string>REDIS_PASSWORD,
   },
 };
 
