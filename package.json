@@ -31,7 +31,10 @@
     "yamljs": "^0.3.0"
   },
   "scripts": {
-    "test": "nodemon app.ts"
+    "start": "node ./build/app.js",
+    "start:dev": "nodemon app.ts",
+    "build": "tsc -p .",
+    "prod:install": "npm ci && npm run build"
   },
   "repository": {
     "type": "git",
