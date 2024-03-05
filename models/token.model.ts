@@ -13,7 +13,7 @@ export default function init(sequelize: Sequelize): typeof TokenModel {
   TokenModel.init(
     {
       token: { type: DataTypes.STRING, allowNull: false },
-      code: { type: DataTypes.NUMBER, allowNull: false },
+      code: { type: DataTypes.INTEGER, allowNull: false },
       type: { type: DataTypes.ENUM({ values: Object.values(TokenType) }), allowNull: false },
       email: { type: DataTypes.STRING, allowNull: false, validate: { isEmail: true } },
     },
