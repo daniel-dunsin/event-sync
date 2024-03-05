@@ -13,7 +13,7 @@ class JWT {
     return token;
   };
 
-  public verify = async <T = { userId: number }>(token: string) => {
+  public verify = async <T = { userId: string }>(token: string) => {
     const payload = await jwt.verify(token, this.decode());
 
     return payload as T;

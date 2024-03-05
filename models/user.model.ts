@@ -7,6 +7,7 @@ export class UserModel extends BaseModel {
   declare lastName: string;
   declare email: string;
   declare profilePicture: string;
+  declare profilePictureId: string;
 }
 
 export default function init(sequelize: Sequelize): typeof UserModel {
@@ -22,6 +23,7 @@ export default function init(sequelize: Sequelize): typeof UserModel {
         validate: { isEmail: true },
       },
       profilePicture: { type: DataTypes.STRING, allowNull: false, defaultValue: DEFAULT_IMAGES.profilePicture },
+      profilePictureId: { type: DataTypes.STRING, allowNull: true },
     },
     {
       sequelize,
