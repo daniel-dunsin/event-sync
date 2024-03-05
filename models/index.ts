@@ -23,7 +23,6 @@ readdir(__dirname, async (err, files) => {
   //   run the init function in the models default export with sequelize variable
   imports.forEach((file) => {
     const model = file.default(sequelize);
-
     db[model.name] = model;
   });
 
@@ -32,7 +31,7 @@ readdir(__dirname, async (err, files) => {
     if (model.associate) model.associate(db);
   });
 
-  sequelize.sync({ alter: true });
+  sequelize.sync({ force: true });
 });
 
 export { sequelize, db };

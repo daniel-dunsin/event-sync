@@ -1,5 +1,5 @@
-import { Model, ModelAttributes } from "sequelize";
+import { Model, ModelAttributes, ModelStatic } from "sequelize";
 
 export type DbModel = {
-  [modelName: string]: Model<ModelAttributes, any> & { associate: (db: DbModel) => void };
+  [modelName: string]: ModelStatic<any> & { associate: (db: DbModel) => void };
 };
