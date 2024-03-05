@@ -1,6 +1,6 @@
 openapi: 3.0.0
 servers:
-  - url: http://localhost:3001
+  - url: http://localhost:3001/api/v1
     description: local server
 
 info:
@@ -8,9 +8,170 @@ info:
   description: API for an event management, booking and ticketing system
   version: 1.0.0
 
-component:
+
+paths:
+  /auth/register:
+    post:
+      security: []
+      tags: [auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                password:
+                  type: string
+      responses:
+        201:
+          $ref: '#/components/schemas/DefaultSuccess'
+  /auth/login:
+    post:
+      security: []
+      tags: [auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: 'Success Response'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+                  accessToken:
+                    type: string
+    /auth/login:
+    post:
+      security: []
+      tags: [auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+      responses:
+        200:
+          description: 'Success Response'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+                  accessToken:
+                    type: string
+  /auth/verify-account:
+    post:
+      security: []
+      tags: [auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                code:
+                  type: number
+      responses:
+        201:
+          $ref: '#/components/schemas/DefaultSuccess'
+  /auth/forgot-password:
+    post:
+      security: []
+      tags: [auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        200:
+          $ref: '#/components/schemas/DefaultSuccess'
+  /auth/reset-password:
+    put:
+      security: []
+      tags: [auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                token:
+                  type: string
+                code:
+                  type: number
+      responses:
+        200:
+          $ref: '#/components/schemas/DefaultSuccess'
+
+components:
   schemas:
+    # defaults
+    DefaultSuccess:
+      description: 'Success Response'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    DefaultError:
+      description: 'Error Response'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+
+    User:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        _id:
+          type: string
+        email:
+          type: string
 
 tags:
   - name: auth
-  - name: user
