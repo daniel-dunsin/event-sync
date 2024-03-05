@@ -29,8 +29,10 @@ readdir(__dirname, async (err, files) => {
 
   //   associate all models
   Object.values(db).forEach((model) => {
-    model.associate(db);
+    if (model.associate) model.associate(db);
   });
+
+  sequelize.sync({ alter: true });
 });
 
 export { sequelize, db };

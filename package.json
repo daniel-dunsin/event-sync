@@ -4,6 +4,7 @@
   "description": "event and booking management and ticketing system",
   "main": "server.ts",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/dotenv": "^8.2.0",
     "@types/ejs": "^3.1.5",
