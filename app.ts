@@ -6,6 +6,7 @@ import { Environments } from "./schema/enums/env.enum";
 import path from "path";
 import YAML from "yamljs";
 import swagger from "swagger-ui-express";
+import { errorHandler } from "./helpers/error.helper";
 
 const app = express();
 
@@ -21,5 +22,8 @@ const docPath = path.join(__dirname, isProd ? "../docs" : "./docs", "v1.yaml");
 const doc = YAML.load(docPath);
 app.use("/api/v1/doc", swagger.serve, swagger.setup(doc));
 app.get("/", (req, res) => res.redirect("/api/v1/doc"));
+
+app.use(errorHandler);
+app.all("*", (_, res) => res.status(404).send("Route does not exist"));
 
 export default app;
