@@ -138,6 +138,59 @@ paths:
       responses:
         200:
           $ref: '#/components/schemas/DefaultSuccess'
+  
+
+  # ===================== USER =============
+  /user:
+    get:
+      tags: [user]
+      security:
+        - bearer: []
+      responses:
+        200:
+          description: "Success Response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    put:
+      tags: [user]
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+      responses:
+        200:
+          $ref: "#/components/schemas/DefaultSuccess"
+
+  /user/profile-picture:
+    put:
+      tags: [user]
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                profilePicture:
+                  type: string
+                  example: "base64"
+      responses:
+        200:
+          $ref: "#/components/schemas/DefaultSuccess"
+
 
 components:
   schemas:
@@ -172,6 +225,12 @@ components:
           type: string
         email:
           type: string
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+  
 
 tags:
   - name: auth
+  - name: user
