@@ -16,6 +16,12 @@ export const loginInput = object({
   }),
 });
 
+export const googleAuthInput = object({
+  body: object({
+    accessToken: string().required(),
+  }),
+});
+
 export const verifyAccountInput = object({
   body: object({
     token: string().required(),

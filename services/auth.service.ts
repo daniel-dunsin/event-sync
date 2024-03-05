@@ -17,6 +17,8 @@ import { sendMail } from "./email.service";
 import { renderTemplate } from "../helpers/email.helper";
 import jwtHelper from "../helpers/jwt.helper";
 import crypto from "crypto";
+import { google } from "googleapis";
+import redisCache from "./cache.service";
 
 async function auth(user: UserModel): Promise<AuthResponse> {
   const accessToken = await jwtHelper.sign(user.id);
@@ -90,6 +92,8 @@ export async function login(data: LoginDTO) {
 
   const dbUser = await UserModel.findOne({ where: { email: user.email } });
 
+  await redisCache.set(`user:${user.id}`, dbUser);
+
   return await auth(dbUser as UserModel);
 }
 
@@ -119,3 +123,38 @@ export async function resetPassword(data: ResetPasswordDTO) {
     await AuthModel.update({ password }, { where: { email: dbToken.email } });
   });
 }
+
+export async function verifyGoogleUser(accessToken: string): Promise<UserModel> {
+  const oauthClient = new google.auth.OAuth2({
+    clientId: secrets.google.clientId,
+    clientSecret: secrets.google.clientSecret,
+  });
+
+  oauthClient.setCredentials({ access_token: accessToken });
+
+  const oauth = google.oauth2({ auth: oauthClient, version: "v2" });
+
+  // @ts-ignore
+  return oauth.userinfo.get().then((user) => ({
+    firstName: <string>user?.data?.given_name,
+    lastName: <string>user?.data?.family_name,
+    profilePicture: <string>user?.data?.picture,
+    email: <string>user?.data?.email,
+  }));
+}
+
+export const googleSignIn = async (accessToken: string): Promise<AuthResponse> => {
+  return verifyGoogleUser(accessToken).then((userData) => {
+    return UserModel.findOne({ where: { email: userData.email } }).then(async (user) => {
+      if (user) {
+        await redisCache.set(`user:${user.id}`, user);
+        return auth(user);
+      } else {
+        await AuthModel.create({ email: userData.email, password: "", isVerified: true });
+        user = await UserModel.create({ ...userData });
+        await redisCache.set(`user:${user.id}`, user);
+        return auth(user);
+      }
+    });
+  });
+};
