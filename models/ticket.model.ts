@@ -4,6 +4,7 @@ import { Sequelize, DataTypes } from "sequelize";
 
 export class TicketModel extends BaseModel {
   declare type: string;
+  declare description: string;
   declare totalNumber: number;
   declare stockCount: number;
   declare price: number;
@@ -14,6 +15,7 @@ export default function init(sequelize: Sequelize): typeof TicketModel {
   TicketModel.init(
     {
       type: { type: DataTypes.STRING, allowNull: false },
+      description: { type: DataTypes.STRING(1000), allowNull: true },
       totalNumber: { type: DataTypes.INTEGER, allowNull: false },
       stockCount: { type: DataTypes.INTEGER, allowNull: false },
       price: { type: DataTypes.DECIMAL, allowNull: false },
