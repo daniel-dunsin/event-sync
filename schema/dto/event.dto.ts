@@ -21,3 +21,12 @@ export interface CreateEventDTO {
   categories: number[];
   gallery: EventGalleryDTO[];
 }
+
+export interface CreateCategoryDTO {
+  name: string;
+  description: string;
+}
+
+export interface UpdateCategoryDTO extends CreateCategoryDTO {
+  id: number;
+}

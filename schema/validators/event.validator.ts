@@ -1,6 +1,23 @@
 import { array, date, number, object, string } from "yup";
 import DEFAULT_MATCHERS from "../../constants/regex.const";
 
+export const createCategoryInput = object({
+  body: object({
+    name: string().required(),
+    description: string().required(),
+  }),
+});
+
+export const updateCategoryInput = object({
+  params: object({
+    id: string().required(),
+  }),
+  body: object({
+    name: string().notRequired(),
+    description: string().notRequired(),
+  }),
+});
+
 export const createEventInput = object({
   body: object({
     name: string().required(),

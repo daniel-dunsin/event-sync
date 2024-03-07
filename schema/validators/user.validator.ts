@@ -10,6 +10,6 @@ export const updateUserInput = object({
 
 export const updateProfilePictureInput = object({
   body: object({
-    profilePicture: string().matches(DEFAULT_MATCHERS.base64, "provide a valid base64 image"),
+    profilePicture: string().required().matches(DEFAULT_MATCHERS.base64, "provide a valid base64 image"),
   }),
 });

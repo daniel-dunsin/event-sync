@@ -15,18 +15,18 @@ interface UploadResponse {
 
 export async function uploadResource(file: string, options?: UploadApiOptions): Promise<UploadResponse> {
   try {
-    const response = await v2.uploader.upload(file, { folder: "event-sync" });
+    const response = await v2.uploader.upload(file, { folder: "event-sync", ...options });
 
     return { public_id: response?.public_id, url: response?.secure_url };
-  } catch (error) {
-    throw new ServiceException(400, "unable to upload resource");
+  } catch (error: any) {
+    throw new ServiceException(400, `unable to upload resource: ${error.message || error}`);
   }
 }
 
 export async function deleteResource(publicId: string) {
   try {
     await v2.uploader.destroy(publicId);
-  } catch (error) {
-    throw new ServiceException(400, "unable to delete resource");
+  } catch (error: any) {
+    throw new ServiceException(400, `unable to delete resource: ${error.message || error}`);
   }
 }
