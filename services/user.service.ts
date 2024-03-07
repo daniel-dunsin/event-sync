@@ -1,6 +1,7 @@
-import { uploadResource } from "../helpers/upload.helper";
+import { deleteResource, uploadResource } from "../helpers/upload.helper";
 import { UserModel } from "../models/user.model";
 import { UpdateProfilePictureDTO, UpdateUserDTO } from "../schema/dto/user.dto";
+import ServiceException from "../schema/exceptions/service.exception";
 import redisCache from "./cache.service";
 
 export async function getUserProfile(userId: number) {
@@ -21,13 +22,18 @@ export async function updateUserProfile({ userId, ...data }: UpdateUserDTO) {
 export async function updateProfilePicture(data: UpdateProfilePictureDTO) {
   const { url, public_id } = await uploadResource(data.profilePicture);
 
-  await UserModel.update(
-    {
-      profilePicture: url,
-      profilePictureId: public_id,
-    },
-    { where: { id: data.userId } }
-  );
+  const user = await UserModel.findByPk(data.userId);
+
+  if (!user) throw new ServiceException(404, "User does not exist");
+
+  const profilePictureId = user.profilePictureId;
+
+  if (profilePictureId) await deleteResource(profilePictureId);
+
+  user.profilePicture = url;
+  user.profilePictureId = public_id;
+
+  await user.save();
 
   await redisCache.delete(`user:${data.userId}`);
 }
