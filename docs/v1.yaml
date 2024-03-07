@@ -10,6 +10,8 @@ info:
 
 
 paths:
+  # ===================== AUTH =============
+
   /auth/register:
     post:
       security: []
@@ -192,6 +194,148 @@ paths:
           $ref: "#/components/schemas/DefaultSuccess"
 
 
+  # ===================== EVENT CATEGORY =============
+  /event/category:
+    post:
+      tags: ["event category"]
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: string
+                description: string
+      responses:
+        201: 
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+    get:
+      tags: ["event category"]
+      security: []
+      responses:
+        200: 
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+  /event/category/{id}:
+    parameters:
+      - in: path
+        required: true
+        name: id
+        schema:
+          type: number
+    put:
+      tags: ["event category"]
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: 
+                  type: string
+                description:
+                  type: string
+      responses:
+        200:
+          $ref: "#/components/schemas/DefaultSuccess"
+    get:
+      tags: ["event category"]
+      security: []
+      responses:
+        200:
+          description: success response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+    delete:
+      tags: ["event category"]
+      security:
+        - bearer: []
+      responses:
+        200:
+          $ref: "#/components/schemas/DefaultSuccess"
+
+
+  # ===================== EVENT =============
+  /event:
+    post:
+      tags: [event]
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                startDate:
+                  type: date
+                endDate:
+                  type: date
+                startTime:
+                  type: date
+                endTime:
+                  type: data
+                addressLine1:
+                  type: string
+                addressLine2:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                country:
+                  type: string
+                ticketPurchaseDeadline:
+                  type: date
+                userId:
+                  type: number
+                categories:
+                  type: array
+                  items:
+                    type: number
+                gallery:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      type:
+                        type: string
+                      url:  
+                        type: string
+                        example: "base64"
+      responses:
+        201:
+          description: success response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"    
+
+
 components:
   schemas:
     # defaults
@@ -221,10 +365,70 @@ components:
           type: string
         lastName:
           type: string
-        _id:
-          type: string
+        id:
+          type: number
         email:
           type: string
+
+    Category:
+      type: object
+      properties:
+        id: 
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+
+    Event:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        startDate:
+          type: date
+        endDate:
+          type: date
+        startTime:
+          type: date
+        endTime:
+          type: data
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        ticketPurchaseDeadline:
+          type: date
+        userId:
+          type: number
+        gallery:
+          type: array
+          items:
+            $ref: "#/components/schemas/EventGallery"
+        user:
+          $ref: "#/components/schemas/User"
+
+    EventGallery:
+      type: object
+      properties:
+        type:
+          type: string
+        url:
+          type: string
+        name:
+          type: string
+        eventId:
+          type: number
+
+
   securitySchemes:
     bearer:
       type: http
@@ -234,3 +438,5 @@ components:
 tags:
   - name: auth
   - name: user
+  - name: "event category"
+  - name: event
