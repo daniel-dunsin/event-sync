@@ -32,13 +32,15 @@ export const createEventInput = object({
     state: string().required(),
     country: string().required(),
     ticketPurchaseDeadline: date().required(),
-    categories: array(number().strict()).min(1, "select at least one category"),
+    categories: array(number().strict()).min(1, "select at least one category").required(),
     gallery: array(
       object({
         name: string().required(),
         type: string().required(),
         url: string().required().matches(DEFAULT_MATCHERS.base64, "Enter valid base64 url"),
       })
-    ).min(1, "select at least one image"),
+    )
+      .min(1, "select at least one image")
+      .required(),
   }),
 });

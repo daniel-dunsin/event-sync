@@ -1,5 +1,6 @@
 import secrets from "../constants/secrets.const";
 import jwt from "jsonwebtoken";
+import ServiceException from "../schema/exceptions/service.exception";
 
 class JWT {
   private decode = () => {
@@ -14,9 +15,13 @@ class JWT {
   };
 
   public verify = async <T = { userId: string }>(token: string) => {
-    const payload = await jwt.verify(token, this.decode());
+    try {
+      const payload = await jwt.verify(token, this.decode());
 
-    return payload as T;
+      return payload as T;
+    } catch (error: any) {
+      throw new ServiceException(401, error.message || error);
+    }
   };
 }
 
