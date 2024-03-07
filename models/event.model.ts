@@ -19,7 +19,7 @@ export class EventModel extends BaseModel {
   declare state: string;
   declare country: string;
   declare ticketPurchaseDeadline: Date;
-  declare gallery: Event;
+  declare gallery: EventGalleryModel;
   declare userId: number;
 }
 
