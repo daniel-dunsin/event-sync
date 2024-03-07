@@ -51,6 +51,7 @@ export default function init(sequelize: Sequelize): typeof EventModel {
     });
     EventModel.hasMany(db["EventGallery"], { foreignKey: "eventId", onDelete: ON_DELETE_EVENTS.CASCADE });
     EventModel.belongsTo(db["User"], { foreignKey: "userId", onDelete: ON_DELETE_EVENTS.SET_NULL });
+    EventModel.hasMany(db["Ticket"], { foreignKey: "eventId", onDelete: ON_DELETE_EVENTS.CASCADE });
   };
 
   return EventModel;
