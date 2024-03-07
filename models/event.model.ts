@@ -4,6 +4,7 @@ import { DbModel } from "../schema/types/db.type";
 import { CategoryModel } from "./category.model";
 import { EventCategoryModel } from "./event-category.model";
 import { EventGalleryModel } from "./event-gallery.model";
+import { ON_DELETE_EVENTS } from "../schema/enums/db.enum";
 
 export class EventModel extends BaseModel {
   declare name: string;
@@ -19,6 +20,7 @@ export class EventModel extends BaseModel {
   declare country: string;
   declare ticketPurchaseDeadline: Date;
   declare gallery: Event;
+  declare userId: number;
 }
 
 export default function init(sequelize: Sequelize): typeof EventModel {
@@ -26,7 +28,8 @@ export default function init(sequelize: Sequelize): typeof EventModel {
 
   EventModel.associate = (db: DbModel) => {
     EventModel.belongsToMany(db["Category"], { through: EventCategoryModel, foreignKey: "eventId" });
-    EventModel.hasMany(db["EventGallery"], { foreignKey: "eventId", onDelete: "CASCADE" });
+    EventModel.hasMany(db["EventGallery"], { foreignKey: "eventId", onDelete: ON_DELETE_EVENTS.CASCADE });
+    EventModel.belongsTo(db["User"], { foreignKey: "userId", onDelete: ON_DELETE_EVENTS.SET_NULL });
   };
 
   return EventModel;

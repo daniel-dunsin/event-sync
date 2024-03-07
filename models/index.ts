@@ -31,7 +31,7 @@ readdir(__dirname, async (err, files) => {
     if (model.associate) model.associate(db);
   });
 
-  sequelize.sync({ force: true });
+  sequelize.sync({ alter: true });
 });
 
 export { sequelize, db };

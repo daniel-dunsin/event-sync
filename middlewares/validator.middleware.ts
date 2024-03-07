@@ -13,7 +13,7 @@ export function validate(schema: AnySchema) {
 
       next();
     } catch (error: any) {
-      throw new ServiceException(400, error.message || error);
+      return next(new ServiceException(400, error.message || error));
     }
   };
 }

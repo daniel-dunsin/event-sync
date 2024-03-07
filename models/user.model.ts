@@ -1,6 +1,8 @@
 import { DataTypes, Sequelize } from "sequelize";
 import BaseModel from "./base";
 import { DEFAULT_IMAGES } from "../constants/image.const";
+import { DbModel } from "../schema/types/db.type";
+import { ON_DELETE_EVENTS } from "../schema/enums/db.enum";
 
 export class UserModel extends BaseModel {
   declare firstName: string;
@@ -31,6 +33,10 @@ export default function init(sequelize: Sequelize): typeof UserModel {
       modelName: "User",
     }
   );
+
+  UserModel.associate = (db: DbModel) => {
+    UserModel.hasMany(db["Event"], { foreignKey: "userId", onDelete: ON_DELETE_EVENTS.SET_NULL });
+  };
 
   return UserModel;
 }

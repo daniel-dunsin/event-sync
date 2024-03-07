@@ -23,7 +23,7 @@ const docPath = path.join(__dirname, isProd ? "../docs" : "./docs", "v1.yaml");
 const doc = YAML.load(docPath);
 app.use("/api/v1/doc", swagger.serve, swagger.setup(doc));
 app.get("/", (req, res) => res.redirect("/api/v1/doc"));
-app.use("/api/v1/doc", routes);
+app.use("/api/v1", routes);
 
 app.use(errorHandler);
 app.all("*", (_, res) => res.status(404).send("Route does not exist"));

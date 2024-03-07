@@ -1,6 +1,6 @@
 import { DataTypes, Sequelize } from "sequelize";
 import BaseModel from "./base";
-import { compare, genSaltSync, hash } from "bcryptjs";
+import { compare, genSaltSync, hashSync } from "bcryptjs";
 
 export class AuthModel extends BaseModel {
   declare email: string;
@@ -23,7 +23,7 @@ export default function init(sequelize: Sequelize): typeof AuthModel {
         set(password: string) {
           if (password) {
             const saltFactor = genSaltSync(10);
-            const hashedPassword = hash(password, saltFactor);
+            const hashedPassword = hashSync(password, saltFactor);
             this.setDataValue("password", hashedPassword);
           }
         },

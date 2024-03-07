@@ -63,7 +63,7 @@ export async function verifyAccount(data: VerifyAccountDTO) {
 
   const dbToken = await TokenModel.findOne({
     where: {
-      value: token,
+      token,
       code,
       type: TokenType.accountVerificationToken,
     },
