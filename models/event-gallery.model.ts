@@ -6,7 +6,8 @@ export class EventGalleryModel extends BaseModel {
   declare name: string;
   declare type: string;
   declare url: string;
-  declare eventId: string;
+  declare urlId: string;
+  declare eventId: number;
 }
 
 export default function init(sequelize: Sequelize): typeof EventGalleryModel {
@@ -15,6 +16,7 @@ export default function init(sequelize: Sequelize): typeof EventGalleryModel {
       name: { type: DataTypes.STRING, allowNull: false },
       type: { type: DataTypes.STRING, allowNull: false },
       url: { type: DataTypes.STRING, allowNull: false },
+      urlId: { type: DataTypes.STRING, allowNull: false },
       eventId: { type: DataTypes.BIGINT },
     },
     { sequelize, tableName: "event_gallery", modelName: "EventGallery" }
