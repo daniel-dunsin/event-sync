@@ -14,12 +14,31 @@ export class TicketModel extends BaseModel {
 export default function init(sequelize: Sequelize): typeof TicketModel {
   TicketModel.init(
     {
-      type: { type: DataTypes.STRING, allowNull: false },
-      description: { type: DataTypes.STRING(1000), allowNull: true },
-      totalNumber: { type: DataTypes.INTEGER, allowNull: false },
-      totalSold: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-      price: { type: DataTypes.DECIMAL, allowNull: false },
-      eventId: { type: DataTypes.BIGINT, allowNull: false },
+      type: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.STRING(1000),
+        allowNull: true,
+      },
+      totalNumber: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      totalSold: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      price: {
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+      },
+      eventId: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+      },
     },
     { modelName: "Ticket", tableName: "ticket", sequelize }
   );

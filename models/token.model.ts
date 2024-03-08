@@ -12,10 +12,23 @@ export class TokenModel extends BaseModel {
 export default function init(sequelize: Sequelize): typeof TokenModel {
   TokenModel.init(
     {
-      token: { type: DataTypes.STRING, allowNull: false },
-      code: { type: DataTypes.INTEGER, allowNull: false },
-      type: { type: DataTypes.ENUM({ values: Object.values(TokenType) }), allowNull: false },
-      email: { type: DataTypes.STRING, allowNull: false, validate: { isEmail: true } },
+      token: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      code: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      type: {
+        type: DataTypes.ENUM({ values: Object.values(TokenType) }),
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: { isEmail: true },
+      },
     },
     { sequelize, tableName: "token", modelName: "Token" }
   );

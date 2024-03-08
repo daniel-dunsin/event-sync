@@ -49,7 +49,14 @@ export async function getEvents(data: GetEventsDTO): Promise<PaginatedResponse<E
 
   if (data.search) {
     searchQuery = {
-      [Op.or]: [{ name: { [Op.iLike]: `%${data.search}%` } }, { description: { [Op.iLike]: `%${data.search}%` } }],
+      [Op.or]: [
+        {
+          name: { [Op.iLike]: `%${data.search}%` },
+        },
+        {
+          description: { [Op.iLike]: `%${data.search}%` },
+        },
+      ],
     };
   }
 

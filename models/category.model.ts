@@ -14,11 +14,24 @@ export class CategoryModel extends BaseModel {
 export default function init(sequelize: Sequelize): typeof CategoryModel {
   CategoryModel.init(
     {
-      name: { type: DataTypes.STRING, allowNull: false },
-      description: { type: DataTypes.STRING, allowNull: true },
-      slug: { type: DataTypes.STRING, allowNull: false },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      slug: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
-    { sequelize, tableName: "category", modelName: "Category" }
+    {
+      sequelize,
+      tableName: "category",
+      modelName: "Category",
+    }
   );
 
   CategoryModel.associate = (db: DbModel) => {

@@ -15,17 +15,35 @@ export class UserModel extends BaseModel {
 export default function init(sequelize: Sequelize): typeof UserModel {
   UserModel.init(
     {
-      id: { type: DataTypes.BIGINT, allowNull: false, autoIncrement: true, primaryKey: true },
-      firstName: { type: DataTypes.STRING, allowNull: false },
-      lastName: { type: DataTypes.STRING, allowNull: false },
+      id: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
         validate: { isEmail: true },
       },
-      profilePicture: { type: DataTypes.STRING, allowNull: false, defaultValue: DEFAULT_IMAGES.profilePicture },
-      profilePictureId: { type: DataTypes.STRING, allowNull: true },
+      profilePicture: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: DEFAULT_IMAGES.profilePicture,
+      },
+      profilePictureId: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       sequelize,

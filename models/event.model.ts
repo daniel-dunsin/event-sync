@@ -26,19 +26,58 @@ export class EventModel extends BaseModel {
 export default function init(sequelize: Sequelize): typeof EventModel {
   EventModel.init(
     {
-      name: { type: DataTypes.STRING, allowNull: false },
-      description: { type: DataTypes.STRING(50000), allowNull: false },
-      startDate: { type: DataTypes.DATE, allowNull: false },
-      startTime: { type: DataTypes.DATE, allowNull: false },
-      endDate: { type: DataTypes.DATE, allowNull: false },
-      endTime: { type: DataTypes.DATE, allowNull: false },
-      addressLine1: { type: DataTypes.STRING, allowNull: false },
-      addressLine2: { type: DataTypes.STRING, allowNull: true },
-      city: { type: DataTypes.STRING, allowNull: false },
-      state: { type: DataTypes.STRING, allowNull: false },
-      country: { type: DataTypes.STRING, allowNull: false },
-      ticketPurchaseDeadline: { type: DataTypes.DATE, allowNull: false },
-      userId: { type: DataTypes.BIGINT, allowNull: false },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.STRING(50000),
+        allowNull: false,
+      },
+      startDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      startTime: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      endDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      endTime: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      addressLine1: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      addressLine2: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      city: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      state: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      country: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      ticketPurchaseDeadline: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      userId: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+      },
     },
     { sequelize, tableName: "event", modelName: "Event" }
   );

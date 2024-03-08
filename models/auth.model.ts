@@ -15,8 +15,18 @@ export class AuthModel extends BaseModel {
 export default function init(sequelize: Sequelize): typeof AuthModel {
   AuthModel.init(
     {
-      id: { type: DataTypes.BIGINT, autoIncrement: true, primaryKey: true, unique: true },
-      email: { type: DataTypes.STRING, validate: { isEmail: true }, allowNull: false, unique: true },
+      id: {
+        type: DataTypes.BIGINT,
+        autoIncrement: true,
+        primaryKey: true,
+        unique: true,
+      },
+      email: {
+        type: DataTypes.STRING,
+        validate: { isEmail: true },
+        allowNull: false,
+        unique: true,
+      },
       password: {
         type: DataTypes.STRING,
         allowNull: true,

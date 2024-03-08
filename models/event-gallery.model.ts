@@ -13,11 +13,25 @@ export class EventGalleryModel extends BaseModel {
 export default function init(sequelize: Sequelize): typeof EventGalleryModel {
   EventGalleryModel.init(
     {
-      name: { type: DataTypes.STRING, allowNull: false },
-      type: { type: DataTypes.STRING, allowNull: false },
-      url: { type: DataTypes.STRING, allowNull: false },
-      urlId: { type: DataTypes.STRING, allowNull: false },
-      eventId: { type: DataTypes.BIGINT },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      type: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      url: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      urlId: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      eventId: {
+        type: DataTypes.BIGINT,
+      },
     },
     { sequelize, tableName: "event_gallery", modelName: "EventGallery" }
   );
