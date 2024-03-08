@@ -30,3 +30,18 @@ export interface CreateCategoryDTO {
 export interface UpdateCategoryDTO extends CreateCategoryDTO {
   id: number;
 }
+
+export interface CreateTicketDTO {
+  eventId: number;
+  type: string;
+  description: string;
+  totalNumber: number;
+  price: number;
+}
+
+export interface UpdateTicketDTO {
+  type: string;
+  description: string;
+  totalNumber: number;
+  id: number;
+}
