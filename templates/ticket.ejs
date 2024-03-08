@@ -110,7 +110,7 @@
   <body>
     <section class="container">
       <header class="user-info">
-        <h2>Adejare Daniel</h2>
+        <h2><%= user?.firstName %> <%= user?.lastName %></h2>
         <p>Booking is confirmed</p>
       </header>
 
@@ -122,34 +122,34 @@
         </div>
 
         <div class="ticket-info-container">
-          <h4>Adejare Daniel</h4>
+          <h4><%= user?.firstName %> <%= user?.lastName %></h4>
           <p>⏰: 11:30pm 21/10/2022</p>
-          <p>📍: Ifo, Ogun State, Nigeria</p>
+          <p>📍: <%= event?.city %>, <%= event?.state %> <%= event.country %></p>
         </div>
       </div>
 
       <div class="ticket-payment-info">
         <div>
           <b>Ticket Type</b>
-          <p>VIP</p>
+          <p><%= ticket?.type %></p>
         </div>
         <div>
           <b>Price</b>
-          <p><b>NGN</b> 20.00</p>
+          <p><b>NGN</b> <%= ticket?.price %></p>
         </div>
         <div>
           <b>No. Of Tickets</b>
-          <p>5</p>
+          <p><%= purchasedTicket?.ticketsCount %></p>
         </div>
 
         <div>
           <b>Total Amount</b>
-          <p><b>NGN</b> 100.00</p>
+          <p><b>NGN</b> <%= purchasedTicket?.amount %></p>
         </div>
       </div>
 
       <div class="qr-code">
-        <img src="https://squadco.com/assets/phone_signup.jpeg" alt="" />
+        <img src="<%= purchasedTicket?.qrCode %>" alt="" />
       </div>
     </section>
   </body>

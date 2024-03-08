@@ -6,6 +6,7 @@ export class PurchasedTicketModel extends BaseModel {
   declare bookingId: string;
   declare ticketId: number;
   declare ticketsCount: number;
+  declare amount: number;
   declare eventId: number;
   declare userId: number;
   declare qrCode: string;
@@ -22,6 +23,10 @@ export default function init(sequelize: Sequelize): typeof PurchasedTicketModel 
       },
       ticketsCount: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      amount: {
+        type: DataTypes.DECIMAL,
         allowNull: false,
       },
       eventId: {

@@ -10,6 +10,9 @@ import { PaymentStatus } from "../schema/enums/payment.enum";
 import { CreatePurchasedTicketDTO } from "../schema/dto/ticket.dto";
 import { generateQrCode } from "../helpers/qrcode.helper";
 import { PurchasedTicketModel } from "../models/purchased-ticket.model";
+import { sendMail } from "./email.service";
+import { EventModel } from "../models/event.model";
+import { renderTemplate } from "../helpers/email.helper";
 
 export async function createTickets(data: CreateTicketDTO[]) {
   return await TicketModel.bulkCreate(data as any);
@@ -109,19 +112,28 @@ export async function createPurchasedTicket(data: CreatePurchasedTicketDTO) {
   const ticket = await TicketModel.findByPk(paymentAttempt.ticketId);
   const bookingId = v4();
   const userId = paymentAttempt.userId;
+  const amount = (ticket?.price as number) * paymentAttempt.ticketsCount;
 
   const qrCode = await generateQrCode({ bookingId, userId });
 
-  await PurchasedTicketModel.create({
+  const purchasedTicket = await PurchasedTicketModel.create({
     bookingId,
     ticketId: paymentAttempt.ticketId,
     ticketsCount: paymentAttempt.ticketsCount,
     eventId: ticket?.eventId,
+    amount,
     userId,
     qrCode,
   });
 
+  const event = await EventModel.findByPk(ticket?.eventId);
+
   await TicketModel.increment({ totalSold: paymentAttempt.ticketsCount }, { where: { id: paymentAttempt.ticketId } });
 
   const user = await UserModel.findByPk(paymentAttempt.userId);
+  await sendMail({
+    to: user?.email,
+    subject: `${ticket?.type?.toUpperCase()} ticket for ${event?.name}`,
+    html: renderTemplate("ticket.ejs", { purchasedTicket, ticket, user, event }),
+  });
 }
