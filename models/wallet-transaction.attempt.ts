@@ -1,0 +1,46 @@
+import { DataTypes, Sequelize } from "sequelize";
+import { WalletTransactionClerk, WalletTransactionStatus } from "../schema/enums/payment.enum";
+import BaseModel from "./base";
+
+export class WalletTransactionModel extends BaseModel {
+  declare transaction_reference: string;
+  declare walletId: number;
+  declare clerkType: WalletTransactionClerk;
+  declare amount: number;
+  declare status: WalletTransactionStatus;
+}
+
+export default function init(sequelize: Sequelize): typeof WalletTransactionModel {
+  WalletTransactionModel.init(
+    {
+      transaction_reference: {
+        type: DataTypes.STRING(1000),
+        allowNull: false,
+      },
+      walletId: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+      },
+      clerkType: {
+        type: DataTypes.ENUM({ values: Object.values(WalletTransactionClerk) }),
+        allowNull: false,
+      },
+      amount: {
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+      },
+      status: {
+        type: DataTypes.ENUM({ values: Object.values(WalletTransactionStatus) }),
+        allowNull: false,
+        defaultValue: WalletTransactionStatus.PENDING,
+      },
+    },
+    {
+      sequelize,
+      tableName: "wallet_transaction",
+      modelName: "WalletTransaction",
+    }
+  );
+
+  return WalletTransactionModel;
+}
