@@ -14,3 +14,8 @@ export enum PaymentStatus {
   SUCCESSFUL = "successful",
   FAILED = "failed",
 }
+
+export enum WebhookEvents {
+  CHARGE_SUCCESSFUL = "charge_successful",
+  CHARGE_FAILED = "charge_failed",
+}
