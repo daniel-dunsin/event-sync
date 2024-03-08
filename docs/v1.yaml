@@ -509,6 +509,10 @@ components:
           type: date
         userId:
           type: number
+        categories:
+          type: array
+          items:
+            $ref: "#/components/schemas/Category"
         gallery:
           type: array
           items:

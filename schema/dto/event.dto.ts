@@ -1,3 +1,5 @@
+import { DefaultQuery } from "./pagination.dto";
+
 export interface EventGalleryDTO {
   name: string;
   type: string;
@@ -20,6 +22,10 @@ export interface CreateEventDTO {
   userId: number;
   categories: number[];
   gallery: EventGalleryDTO[];
+}
+
+export interface GetEventsDTO extends DefaultQuery {
+  search: string;
 }
 
 export interface CreateCategoryDTO {

@@ -44,3 +44,11 @@ export const createEventInput = object({
       .required(),
   }),
 });
+
+export const getEventsInput = object({
+  query: object({
+    search: string().notRequired(),
+    page: number().notRequired(),
+    limit: number().notRequired(),
+  }),
+});

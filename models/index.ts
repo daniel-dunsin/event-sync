@@ -7,7 +7,7 @@ import ServiceException from "../schema/exceptions/service.exception";
 
 const sequelize = new Sequelize(secrets.databaseUrl, {
   dialect: "postgres",
-  logging: false,
+  logging: console.log,
 });
 const db: DbModel = {};
 const filename = basename(__filename);
