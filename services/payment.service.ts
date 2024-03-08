@@ -6,13 +6,11 @@ import { PaymentStatus, WebhookEvents } from "../schema/enums/payment.enum";
 import ServiceException from "../schema/exceptions/service.exception";
 import { TicketModel } from "../models/ticket.model";
 import { generateQrCode } from "../helpers/qrcode.helper";
+import { createPurchasedTicket } from "./ticket.service";
 
 export async function handleSuccessfulCharge(data: WebhookResponse) {
   /**
    * update the payment attempt status
-   * generate a qr code with the userId and bookingId
-   * create the purchased ticket
-   * add the money to the event creator wallet
    */
   const paymentAttempt = await PaymentAttemptModel.findOne({
     where: {
@@ -23,21 +21,8 @@ export async function handleSuccessfulCharge(data: WebhookResponse) {
   paymentAttempt.status = PaymentStatus.SUCCESSFUL;
   await paymentAttempt.save();
 
-  const ticket = await TicketModel.findByPk(paymentAttempt.ticketId);
+  await createPurchasedTicket({ paymentAttemptId: paymentAttempt.id });
 
-  const bookingId = v4();
-  const userId = paymentAttempt.userId;
-
-  const qrCode = await generateQrCode({ bookingId, userId });
-
-  await PurchasedTicketModel.create({
-    bookingId,
-    ticketId: paymentAttempt.ticketId,
-    ticketsCount: paymentAttempt.ticketsCount,
-    eventId: ticket?.eventId,
-    userId,
-    qrCode,
-  });
   //  todo=> add money to user wallet
 }
 

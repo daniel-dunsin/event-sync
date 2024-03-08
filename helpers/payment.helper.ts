@@ -16,7 +16,9 @@ export async function initiateTransaction(data: InitiateTransactionDTO): Promise
     });
 
     return response?.data?.data;
-  } catch (error) {
-    throw new ServiceException(500, "Unable to initiate transaction");
+  } catch (error: any) {
+    console.log(error.response);
+    console.log(error.data);
+    throw new ServiceException(500, error);
   }
 }
