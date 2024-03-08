@@ -19,6 +19,7 @@ import jwtHelper from "../helpers/jwt.helper";
 import crypto from "crypto";
 import { google } from "googleapis";
 import redisCache from "./cache.service";
+import { createWallet } from "./wallet.service";
 
 async function auth(user: UserModel): Promise<AuthResponse> {
   const accessToken = await jwtHelper.sign(user.id);
@@ -44,12 +45,14 @@ export async function register(data: RegisterDTO) {
   const dbAuth = await AuthModel.findOne({ where: { email } });
   if (dbAuth) throw new ServiceException(400, "A user with this email already exists");
 
-  await UserModel.create({ firstName, lastName, email });
+  const user = await UserModel.create({ firstName, lastName, email });
   await AuthModel.create({ email, password });
   const token = v4();
   const code = Math.floor(Math.random() * 999999999);
   const link = `${secrets.frontendUrl}/verify-email/${code}/${token}`;
   await findOrCreateToken({ email, token, code, type: TokenType.accountVerificationToken });
+
+  await createWallet(user.id);
 
   await sendMail({
     to: email,
@@ -152,6 +155,7 @@ export const googleSignIn = async (accessToken: string): Promise<AuthResponse> =
       } else {
         await AuthModel.create({ email: userData.email, password: "", isVerified: true });
         user = await UserModel.create({ ...userData });
+        await createWallet(user.id);
         await redisCache.set(`user:${user.id}`, user);
         return auth(user);
       }

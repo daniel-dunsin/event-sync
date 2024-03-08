@@ -1,6 +1,7 @@
 import { DataTypes, Sequelize } from "sequelize";
 import { WalletTransactionClerk, WalletTransactionStatus } from "../schema/enums/payment.enum";
 import BaseModel from "./base";
+import { v4 } from "uuid";
 
 export class WalletTransactionModel extends BaseModel {
   declare transaction_reference: string;
@@ -16,6 +17,7 @@ export default function init(sequelize: Sequelize): typeof WalletTransactionMode
       transaction_reference: {
         type: DataTypes.STRING(1000),
         allowNull: false,
+        defaultValue: v4(),
       },
       walletId: {
         type: DataTypes.BIGINT,

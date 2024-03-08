@@ -6,13 +6,15 @@ import { PaymentAttemptModel } from "../models/payment-attempt.model";
 import { PurchaseTicketDTO } from "../schema/dto/payment.dto";
 import { UserModel } from "../models/user.model";
 import { initiateTransaction } from "../helpers/payment.helper";
-import { PaymentStatus } from "../schema/enums/payment.enum";
+import { PaymentStatus, WalletTransactionClerk, WalletTransactionStatus } from "../schema/enums/payment.enum";
 import { CreatePurchasedTicketDTO } from "../schema/dto/ticket.dto";
 import { generateQrCode } from "../helpers/qrcode.helper";
 import { PurchasedTicketModel } from "../models/purchased-ticket.model";
 import { sendMail } from "./email.service";
 import { EventModel } from "../models/event.model";
 import { renderTemplate } from "../helpers/email.helper";
+import { WalletModel } from "../models/wallet.model";
+import { createWalletTransaction } from "./wallet.service";
 
 export async function createTickets(data: CreateTicketDTO[]) {
   return await TicketModel.bulkCreate(data as any);
@@ -135,5 +137,15 @@ export async function createPurchasedTicket(data: CreatePurchasedTicketDTO) {
     to: user?.email,
     subject: `${ticket?.type?.toUpperCase()} ticket for ${event?.name}`,
     html: renderTemplate("ticket.ejs", { purchasedTicket, ticket, user, event }),
+  });
+
+  // add money to event creator wallet
+  const userWallet = await WalletModel.findOne({ where: { userId } });
+
+  await createWalletTransaction({
+    amount,
+    walletId: userWallet?.id,
+    clerkType: WalletTransactionClerk.CREDIT,
+    status: WalletTransactionStatus.SUCCESSFUL,
   });
 }
