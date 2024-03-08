@@ -148,4 +148,6 @@ export async function createPurchasedTicket(data: CreatePurchasedTicketDTO) {
     clerkType: WalletTransactionClerk.CREDIT,
     status: WalletTransactionStatus.SUCCESSFUL,
   });
+
+  return purchasedTicket;
 }

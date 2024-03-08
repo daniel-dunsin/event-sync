@@ -4,6 +4,6 @@ import paymentRoutes from "./payment.routes";
 
 const router = Router();
 
-router.use("/", authenticate, paymentRoutes);
+router.use("/", paymentRoutes);
 
 export default router;

@@ -4,8 +4,11 @@ import { DbModel } from "../schema/types/db.type";
 import { basename, join } from "path";
 import { readdir } from "fs";
 import ServiceException from "../schema/exceptions/service.exception";
+import { Environments } from "../schema/enums/env.enum";
 
-const sequelize = new Sequelize(secrets.databaseUrl, {
+const databaseUrl = secrets.nodeEnv === Environments.PRODUCTION ? `${secrets.databaseUrl}?sslmode=require` : secrets.databaseUrl;
+
+const sequelize = new Sequelize(databaseUrl, {
   dialect: "postgres",
   logging: console.log,
 });

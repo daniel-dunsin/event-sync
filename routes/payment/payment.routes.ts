@@ -1,10 +1,12 @@
 import { Router } from "express";
 import { validate } from "../../middlewares/validator.middleware";
 import { purchaseTicketInput } from "../../schema/validators/payment.validate";
-import { purchaseTicketController } from "../../controllers/payment/payment.controller";
+import { handleWebhookController, purchaseTicketController } from "../../controllers/payment/payment.controller";
+import authenticate from "../../middlewares/auth.middleware";
 
 const paymentRoutes = Router();
 
-paymentRoutes.post("/purchase/ticket/:id", validate(purchaseTicketInput), purchaseTicketController);
+paymentRoutes.post("/purchase/ticket/:id", authenticate, validate(purchaseTicketInput), purchaseTicketController);
+paymentRoutes.post("/webhook", handleWebhookController);
 
 export default paymentRoutes;

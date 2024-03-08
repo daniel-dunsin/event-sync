@@ -22,8 +22,17 @@ export async function handleSuccessfulCharge(data: WebhookResponse) {
   await paymentAttempt.save();
 
   await createPurchasedTicket({ paymentAttemptId: paymentAttempt.id });
+}
 
-  //  todo=> add money to user wallet
+export async function handleFailedCharge(data: WebhookResponse) {
+  const paymentAttempt = await PaymentAttemptModel.findOne({
+    where: {
+      transaction_ref: data.Body.transaction_ref,
+    },
+  });
+  if (!paymentAttempt) throw new ServiceException(404, "payment attempt no dey");
+  paymentAttempt.status = PaymentStatus.FAILED;
+  await paymentAttempt.save();
 }
 
 export async function handleWebhook(data: WebhookResponse) {
@@ -32,6 +41,7 @@ export async function handleWebhook(data: WebhookResponse) {
       await handleSuccessfulCharge(data);
       break;
     case WebhookEvents.CHARGE_FAILED:
+      await handleFailedCharge(data);
       break;
     default:
       return "werey, your event no exist";
