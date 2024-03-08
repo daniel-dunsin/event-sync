@@ -3,6 +3,7 @@ import BaseModel from "./base";
 import { EventModel } from "./event.model";
 import { CategoryModel } from "./category.model";
 import { DbModel } from "../schema/types/db.type";
+import { ON_DELETE_EVENTS } from "../schema/enums/db.enum";
 
 export class EventCategoryModel extends BaseModel {
   declare eventId: number;
@@ -19,8 +20,8 @@ export default function init(sequelize: Sequelize): typeof EventCategoryModel {
   );
 
   EventCategoryModel.associate = (db: DbModel) => {
-    EventCategoryModel.belongsTo(db["Event"], { foreignKey: "eventId" });
-    EventCategoryModel.belongsTo(db["Category"], { foreignKey: "categoryId" });
+    EventCategoryModel.belongsTo(db["Event"], { foreignKey: "eventId", onDelete: ON_DELETE_EVENTS.CASCADE });
+    EventCategoryModel.belongsTo(db["Category"], { foreignKey: "categoryId", onDelete: ON_DELETE_EVENTS.CASCADE });
   };
 
   return EventCategoryModel;

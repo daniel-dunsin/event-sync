@@ -28,6 +28,22 @@ export interface GetEventsDTO extends DefaultQuery {
   search: string;
 }
 
+export interface UpdateEventDTO {
+  name: string;
+  description: string;
+  startDate: Date;
+  startTime: Date;
+  endDate: Date;
+  endTime: Date;
+  addressLine1: string;
+  addressLine2?: string;
+  city: string;
+  state: string;
+  country: string;
+  ticketPurchaseDeadline: Date;
+  eventId: number;
+}
+
 export interface CreateCategoryDTO {
   name: string;
   description: string;

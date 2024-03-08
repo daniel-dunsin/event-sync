@@ -52,3 +52,20 @@ export const getEventsInput = object({
     limit: number().notRequired(),
   }),
 });
+
+export const updateEventInput = object({
+  body: object({
+    name: string().notRequired(),
+    description: string().notRequired().min(40, "description must not be less than 40 characters"),
+    startDate: date().notRequired(),
+    startTime: date().notRequired(),
+    endDate: date().notRequired(),
+    endTime: date().notRequired(),
+    addressLine1: string().notRequired(),
+    addressLine2: string().notRequired(),
+    city: string().notRequired(),
+    state: string().notRequired(),
+    country: string().notRequired(),
+    ticketPurchaseDeadline: date().notRequired(),
+  }),
+});
