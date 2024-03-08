@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticket</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Open Sans", sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        width: 100%;
+        background-color: #e7e7e7;
+        padding: 1rem 0rem;
+      }
+
+      .container {
+        width: 90vw;
+        max-width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 1.2rem;
+        background-color: white;
+        box-shadow: 0px 2px 3px rgba(0, 00, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      .user-info {
+        width: 100%;
+        padding: 1rem;
+        background-color: royalblue;
+        color: white;
+        border-radius: 8px;
+      }
+      .user-info h2 {
+        font-size: 1rem;
+        font-weight: bold;
+      }
+      .user-info p {
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+      }
+
+      .booking-id {
+        margin-top: 0.4rem;
+      }
+
+      .ticket-info {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .ticket-info > * {
+        flex: 1;
+      }
+
+      .ticket-info .image-container img {
+        width: 100%;
+        height: 150px;
+        border-radius: 8px;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .ticket-info .ticket-info-container p {
+        font-size: 0.8rem;
+        margin-top: 0.2rem;
+      }
+
+      .ticket-payment-info {
+        margin-top: 0.8rem;
+        background-color: #e7e7e7;
+        padding: 1rem;
+        border-radius: 8px;
+      }
+
+      .ticket-payment-info > div {
+        display: flex;
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .qr-code {
+        margin-top: 2rem;
+        width: 100%;
+        height: 100%;
+      }
+
+      .qr-code img {
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 8px;
+        height: 250px;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="container">
+      <header class="user-info">
+        <h2>Adejare Daniel</h2>
+        <p>Booking is confirmed</p>
+      </header>
+
+      <p class="booking-id"><b>Booking Id: </b> abcdef</p>
+
+      <div class="ticket-info">
+        <div class="image-container">
+          <img src="https://squadco.com/assets/phone_signup.jpeg" alt="" />
+        </div>
+
+        <div class="ticket-info-container">
+          <h4>Adejare Daniel</h4>
+          <p>⏰: 11:30pm 21/10/2022</p>
+          <p>📍: Ifo, Ogun State, Nigeria</p>
+        </div>
+      </div>
+
+      <div class="ticket-payment-info">
+        <div>
+          <b>Ticket Type</b>
+          <p>VIP</p>
+        </div>
+        <div>
+          <b>Price</b>
+          <p><b>NGN</b> 20.00</p>
+        </div>
+        <div>
+          <b>No. Of Tickets</b>
+          <p>5</p>
+        </div>
+
+        <div>
+          <b>Total Amount</b>
+          <p><b>NGN</b> 100.00</p>
+        </div>
+      </div>
+
+      <div class="qr-code">
+        <img src="https://squadco.com/assets/phone_signup.jpeg" alt="" />
+      </div>
+    </section>
+  </body>
+</html>
