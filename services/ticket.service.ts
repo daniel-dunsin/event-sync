@@ -126,6 +126,7 @@ export async function createPurchasedTicket(data: CreatePurchasedTicketDTO) {
     amount,
     userId,
     qrCode,
+    paymentAttemptId: paymentAttempt.id,
   });
 
   const event = await EventModel.findByPk(ticket?.eventId);

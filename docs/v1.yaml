@@ -2,6 +2,8 @@ openapi: 3.0.0
 servers:
   - url: http://localhost:3001/api/v1
     description: local server
+  - url: https://event-sync-2rdc.onrender.com/api/v1/doc/
+    description: prod
 
 info:
   title: Event Sync API
@@ -522,6 +524,39 @@ paths:
               schema:
                 $ref: "#/components/schemas/Ticket"   
 
+
+  # ================ PAYMENT ============
+  /payment/purchase/ticket/{id}:
+    parameters:
+      - in: path
+        required: true
+        name: id
+        schema:
+          type: number
+    post:
+      tags: [payment]
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticketsCount:
+                  type: number
+      responses:
+        200:
+          description: success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  checkout_url:
+                    type: string
+
 components:
   schemas:
     # defaults
@@ -645,3 +680,4 @@ tags:
   - name: "event category"
   - name: event
   - name: ticket
+  - name: payment
