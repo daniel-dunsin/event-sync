@@ -38,7 +38,7 @@ export default function init(sequelize: Sequelize): typeof PurchasedTicketModel 
         allowNull: false,
       },
       qrCode: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(500000),
         allowNull: false,
       },
       qrCodeUsed: {
