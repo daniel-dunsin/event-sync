@@ -1,5 +1,7 @@
 import { deleteResource, uploadResource } from "../helpers/upload.helper";
+import { TicketModel } from "../models/ticket.model";
 import { UserModel } from "../models/user.model";
+import { PurchaseTicketDTO } from "../schema/dto/payment.dto";
 import { UpdateProfilePictureDTO, UpdateUserDTO } from "../schema/dto/user.dto";
 import ServiceException from "../schema/exceptions/service.exception";
 import redisCache from "./cache.service";
