@@ -16,5 +16,6 @@ export const updateTicketInput = object({
     type: string().required(),
     description: string().notRequired(),
     totalNumber: number().strict().required(),
+    price: number().strict().required(),
   }),
 });

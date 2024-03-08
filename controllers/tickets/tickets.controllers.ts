@@ -1,7 +1,7 @@
 import { Request } from "express";
 import expressAsyncHandler from "express-async-handler";
 import { CreateTicketDTO, UpdateTicketDTO } from "../../schema/dto/event.dto";
-import { createTickets, deleteTicket, getTickets, updateTicket } from "../../services/ticket.service";
+import { createTickets, deleteTicket, getTicket, getTickets, updateTicket } from "../../services/ticket.service";
 
 export const createTicketsController = expressAsyncHandler(async (req: Request<{ id: string }, {}, CreateTicketDTO[]>, res) => {
   const eventId = parseInt(req.params.id);
@@ -24,7 +24,7 @@ export const getTicketsController = expressAsyncHandler(async (req: Request<{ id
 export const getTicketController = expressAsyncHandler(async (req: Request<{ id: string }>, res) => {
   const ticketId = parseInt(req.params.id);
 
-  const data = await getTickets(ticketId);
+  const data = await getTicket(ticketId);
 
   res.status(200).json(data);
 });
