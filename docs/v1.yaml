@@ -334,7 +334,93 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Event"    
+    get:
+      tags: [event]
+      security: []
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Event"
+  /event/user:
+    get:
+      tags: [event]
+      security: 
+        - bearer: []
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Event"
 
+  /event/{id}:
+    parameters:
+      - in: path
+        required: true
+        schema:
+          type: number
+        name: id
+    get:
+      tags: [event]
+      security: []
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+    delete:
+      tags: [event]
+      security: 
+        - bearer: []
+      responses:
+        200:
+          $ref: "#/components/schemas/DefaultSuccess"
+
+    put:
+      tags: [event]
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                startDate:
+                  type: date
+                endDate:
+                  type: date
+                startTime:
+                  type: date
+                endTime:
+                  type: data
+                addressLine1:
+                  type: string
+                addressLine2:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                country:
+                  type: string
+                ticketPurchaseDeadline:
+                  type: date
+      responses:
+        200:
+          $ref: "#/components/schemas/DefaultSuccess"
 
   # ===================== TICKET =============
   /ticket/event/{id}:
