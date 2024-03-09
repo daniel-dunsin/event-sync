@@ -9,9 +9,11 @@ export const purchaseTicketController = expressAsyncHandler(
     const userId = req.userId as number;
     const ticketId = parseInt(req.params.id);
 
-    const checkout_url = await purchaseTicket({ ...req.body, userId, ticketId });
+    const data = await purchaseTicket({ ...req.body, userId, ticketId });
 
-    res.status(201).json({ checkout_url });
+    const response = typeof data === "string" ? { checkout_url: data } : data;
+
+    res.status(201).json(response);
   }
 );
 

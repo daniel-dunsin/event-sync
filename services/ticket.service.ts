@@ -61,10 +61,10 @@ export async function purchaseTicket(data: PurchaseTicketDTO) {
   if (!user) throw new ServiceException(404, "user does not exist");
 
   const ticket = await TicketModel.findByPk(data.ticketId);
-  if (!ticket) throw new ServiceException(404, "course does not exist");
+  if (!ticket) throw new ServiceException(404, "ticket does not exist");
 
   const ticketsAvailable = ticket.totalNumber - ticket.totalSold;
-  if (data.ticketsCount > ticketsAvailable) throw new ServiceException(400, `Only ${data.ticketsCount} are available`);
+  if (data.ticketsCount > ticketsAvailable) throw new ServiceException(400, `Only ${ticketsAvailable} tickets are available`);
 
   const transaction_ref = v4();
 
@@ -78,8 +78,8 @@ export async function purchaseTicket(data: PurchaseTicketDTO) {
       status: PaymentStatus.SUCCESSFUL,
     });
 
-    await createPurchasedTicket({ paymentAttemptId: attempt.id });
-    return;
+    const purchasedTicket = await createPurchasedTicket({ paymentAttemptId: attempt.id });
+    return purchasedTicket;
   } else {
     const amount = data.ticketsCount * ticket.price * 100;
     const attempt = await PaymentAttemptModel.create({

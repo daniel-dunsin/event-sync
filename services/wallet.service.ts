@@ -1,4 +1,5 @@
-import { WalletTransactionModel } from "../models/wallet-transaction.attempt";
+import { v4 } from "uuid";
+import { WalletTransactionModel } from "../models/wallet-transaction.model";
 import { WalletModel } from "../models/wallet.model";
 import { CreateWalletTransactionDTO } from "../schema/dto/wallet.dto";
 import { WalletTransactionClerk, WalletTransactionStatus } from "../schema/enums/payment.enum";

@@ -5,4 +5,5 @@ export interface CreateWalletTransactionDTO {
   clerkType: WalletTransactionClerk;
   amount: number;
   status: WalletTransactionStatus;
+  transaction_reference?: string;
 }
