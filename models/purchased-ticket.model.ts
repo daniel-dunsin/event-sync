@@ -64,7 +64,7 @@ export default function init(sequelize: Sequelize): typeof PurchasedTicketModel 
 
   PurchasedTicketModel.associate = (db: DbModel) => {
     PurchasedTicketModel.belongsTo(db["Ticket"], { foreignKey: "ticketId" });
-    PurchasedTicketModel.belongsTo(db["User"], { foreignKey: "userId" });
+    PurchasedTicketModel.belongsTo(db["User"], { foreignKey: "userId", as: "user" });
     PurchasedTicketModel.belongsTo(db["PaymentAttempt"], { foreignKey: "paymentAttemptId" });
     PurchasedTicketModel.belongsTo(db["Event"], { foreignKey: "eventId" });
   };

@@ -5,6 +5,7 @@ import { createTicketsInput, updateTicketInput } from "../../schema/validators/t
 import {
   createTicketsController,
   deleteTicketController,
+  getEventTicketBuyersController,
   getTicketController,
   getTicketsController,
   getTicketsStatsController,
@@ -24,5 +25,7 @@ ticketRoutes.put("/:id", authenticate, validate(updateTicketInput), updateTicket
 ticketRoutes.delete("/:id", authenticate, deleteTicketController);
 
 ticketRoutes.get("/event/:id/stats", authenticate, getTicketsStatsController);
+
+ticketRoutes.get("/event/:id/buyers", authenticate, getEventTicketBuyersController);
 
 export default ticketRoutes;

@@ -159,3 +159,13 @@ export async function getTicketsStats(eventId: number) {
 
   return { totalNumber, totalSold };
 }
+
+export async function getEventTicketBuyers(eventId: number) {
+  const buyers = await PurchasedTicketModel.findAll({
+    where: { eventId },
+    include: [{ model: UserModel, as: "user" }],
+    attributes: ["ticketsCount"],
+  });
+
+  return buyers;
+}
