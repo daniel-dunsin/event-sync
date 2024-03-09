@@ -20,6 +20,7 @@ const {
   REDIS_HOST,
   REDIS_PORT,
   SQUAD_SANDBOX_KEY,
+  SQUAD_MERCHANT_ID,
 } = process.env;
 
 const secrets = {
@@ -47,7 +48,10 @@ const secrets = {
     port: <string | number>REDIS_PORT,
     password: <string>REDIS_PASSWORD,
   },
-  squadKey: <string>SQUAD_SANDBOX_KEY,
+  squad: {
+    sandboxKey: <string>SQUAD_SANDBOX_KEY,
+    merchantId: <string>SQUAD_MERCHANT_ID,
+  },
 };
 
 export default secrets;
