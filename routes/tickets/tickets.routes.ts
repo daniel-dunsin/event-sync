@@ -7,6 +7,7 @@ import {
   deleteTicketController,
   getTicketController,
   getTicketsController,
+  getTicketsStatsController,
   updateTicketController,
 } from "../../controllers/tickets/tickets.controllers";
 
@@ -20,6 +21,8 @@ ticketRoutes.get("/:id", getTicketController);
 
 ticketRoutes.put("/:id", authenticate, validate(updateTicketInput), updateTicketController);
 
-ticketRoutes.delete("/:id", deleteTicketController);
+ticketRoutes.delete("/:id", authenticate, deleteTicketController);
+
+ticketRoutes.get("/event/:id/stats", authenticate, getTicketsStatsController);
 
 export default ticketRoutes;

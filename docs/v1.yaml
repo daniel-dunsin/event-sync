@@ -476,6 +476,29 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Ticket"
+  /ticket/event/{id}/stats:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      tags: [ticket]
+      security:
+        - bearer: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalSold:
+                    type: number
+                  totalNumber:
+                    type: number
   /ticket/{id}:
     parameters:
       - in: path

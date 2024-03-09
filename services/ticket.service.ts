@@ -152,3 +152,10 @@ export async function createPurchasedTicket(data: CreatePurchasedTicketDTO) {
 
   return purchasedTicket;
 }
+
+export async function getTicketsStats(eventId: number) {
+  const totalNumber = await TicketModel.sum("totalNumber", { where: { eventId } });
+  const totalSold = await TicketModel.sum("totalSold", { where: { eventId } });
+
+  return { totalNumber, totalSold };
+}
