@@ -1,10 +1,9 @@
 import { Router } from "express";
-import router from "../auth";
 import authenticate from "../../middlewares/auth.middleware";
 import walletRoutes from "./wallet.routes";
 
-const rotuer = Router();
+const router = Router();
 
-router.use("/wallet", authenticate, walletRoutes);
+router.use("/", authenticate, walletRoutes);
 
 export default router;

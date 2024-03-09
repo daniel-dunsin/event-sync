@@ -1,6 +1,7 @@
 import { DataTypes, Sequelize } from "sequelize";
 import BaseModel from "./base";
 import { DbModel } from "../schema/types/db.type";
+import { EventModel } from "./event.model";
 
 export class PurchasedTicketModel extends BaseModel {
   declare bookingId: string;

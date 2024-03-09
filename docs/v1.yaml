@@ -629,6 +629,21 @@ paths:
                   checkout_url:
                     type: string
 
+
+  # ================ WALLET ==========
+  /wallet:
+    get:
+      tags: [wallet]
+      security:
+        - bearer: []
+      responses:
+        200:
+          description: get user wallet
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wallet"
+
 components:
   schemas:
     # defaults
@@ -738,7 +753,15 @@ components:
           type: number
         totalSold:
           type: number
-
+    Wallet:
+      type: object
+      properties:
+        id:
+          type: number
+        userId:
+          type: number
+        balance:
+          type: number
 
   securitySchemes:
     bearer:
@@ -753,3 +776,4 @@ tags:
   - name: event
   - name: ticket
   - name: payment
+  - name: wallet
