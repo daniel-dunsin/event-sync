@@ -11,6 +11,7 @@ import { UserModel } from "../models/user.model";
 import { isBefore, startOfToday } from "date-fns";
 import { CategoryModel } from "../models/category.model";
 import { validateEvent } from "../helpers/event.helper";
+import { PurchasedTicketModel } from "../models/purchased-ticket.model";
 
 export async function createEvent({ categories, gallery, ...data }: CreateEventDTO) {
   const transaction = await sequelize.transaction();
@@ -117,8 +118,11 @@ export async function getEvent(eventId: number) {
   return event;
 }
 
-// TODO: CANNOT DELETE EVENT WITH MORE THAN ONE PURCHASED TICKET
 export async function deleteEvent(eventId: number) {
+  const purchasedTickets = await PurchasedTicketModel.findAll({ where: { eventId } });
+
+  if (purchasedTickets.length > 0) throw new ServiceException(400, "cannot delete with more than one purchased tickets");
+
   await EventModel.destroy({ where: { id: eventId } });
 }
 
