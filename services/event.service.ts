@@ -137,3 +137,13 @@ export async function getEventProfit(eventId: number) {
 
   return profit;
 }
+
+export async function getUserAttendedEvents(userId: number) {
+  const events = await PurchasedTicketModel.findOne({
+    where: { userId },
+    include: [{ model: EventModel, as: "event" }],
+    group: ["eventId"],
+  });
+
+  return events;
+}

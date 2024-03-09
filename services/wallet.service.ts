@@ -3,6 +3,7 @@ import { WalletTransactionModel } from "../models/wallet-transaction.model";
 import { WalletModel } from "../models/wallet.model";
 import { CreateWalletTransactionDTO } from "../schema/dto/wallet.dto";
 import { WalletTransactionClerk, WalletTransactionStatus } from "../schema/enums/payment.enum";
+import ServiceException from "../schema/exceptions/service.exception";
 
 export async function createWalletTransaction(data: CreateWalletTransactionDTO) {
   await WalletTransactionModel.create({ ...data });
@@ -22,4 +23,12 @@ export async function createWallet(userId: number) {
   if (walletInDb) return walletInDb;
 
   return await WalletModel.create({ userId });
+}
+
+export async function getUserWalletInfo(userId: number) {
+  const wallet = await WalletModel.findOne({ where: { userId } });
+
+  if (!wallet) throw new ServiceException(404, "user wallet does not exist");
+
+  return wallet;
 }
