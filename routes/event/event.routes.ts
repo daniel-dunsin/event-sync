@@ -5,6 +5,7 @@ import {
   createEventController,
   deleteEventController,
   getEventController,
+  getEventProfitController,
   getEventsController,
   getUserCreatedEventsController,
   updateEventController,
@@ -20,5 +21,6 @@ eventRoutes.get("/user", authenticate, validate(getEventsInput), extractQuery, g
 eventRoutes.get("/:id", getEventController);
 eventRoutes.delete("/:id", authenticate, deleteEventController);
 eventRoutes.put("/:id", authenticate, validate(updateEventInput), updateEventController);
+eventRoutes.get("/:id/profit", authenticate, getEventProfitController);
 
 export default eventRoutes;

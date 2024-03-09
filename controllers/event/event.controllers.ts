@@ -1,7 +1,15 @@
 import { Request } from "express";
 import expressAsyncHandler from "express-async-handler";
 import { CreateEventDTO, GetEventsDTO, UpdateEventDTO } from "../../schema/dto/event.dto";
-import { createEvent, deleteEvent, getEvent, getEvents, getUserCreatedEvents, updateEvent } from "../../services/event.service";
+import {
+  createEvent,
+  deleteEvent,
+  getEvent,
+  getEventProfit,
+  getEvents,
+  getUserCreatedEvents,
+  updateEvent,
+} from "../../services/event.service";
 
 export const createEventController = expressAsyncHandler(async (req: Request<{}, {}, CreateEventDTO>, res) => {
   const userId = req.userId as number;
@@ -47,4 +55,12 @@ export const updateEventController = expressAsyncHandler(async (req: Request<{ i
   await updateEvent({ ...req.body, eventId });
 
   res.status(200).json({ message: "event updated" });
+});
+
+export const getEventProfitController = expressAsyncHandler(async (req: Request<{ id: string }>, res) => {
+  const eventId = parseInt(req.params.id);
+
+  const data = await getEventProfit(eventId);
+
+  res.status(200).json({ profit: data });
 });

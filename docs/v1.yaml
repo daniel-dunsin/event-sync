@@ -423,7 +423,29 @@ paths:
       responses:
         200:
           $ref: "#/components/schemas/DefaultSuccess"
-
+  /event/{id}/profit:
+    parameters:
+      - in: path
+        required: true
+        schema:
+          type: number
+        name: id
+    get:
+      tags: [event]
+      security:
+        - bearer: []
+      responses:
+        200:
+          description: success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  profit: number
+ 
+ 
+ 
   # ===================== TICKET =============
   /ticket/event/{id}:
     parameters:

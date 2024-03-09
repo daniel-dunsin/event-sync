@@ -131,3 +131,9 @@ export async function updateEvent({ eventId, ...data }: UpdateEventDTO) {
 
   await EventModel.update({ ...data }, { where: { id: eventId } });
 }
+
+export async function getEventProfit(eventId: number) {
+  const profit = await PurchasedTicketModel.sum("amount", { where: { eventId } });
+
+  return profit;
+}
