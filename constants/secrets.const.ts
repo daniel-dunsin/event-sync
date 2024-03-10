@@ -19,7 +19,8 @@ const {
   REDIS_PASSWORD,
   REDIS_HOST,
   REDIS_PORT,
-  SQUAD_SANDBOX_KEY,
+  SQUAD_SANDBOX_SECRET_KEY,
+  SQUAD_LIVE_SECRET_KEY,
   SQUAD_MERCHANT_ID,
 } = process.env;
 
@@ -49,7 +50,8 @@ const secrets = {
     password: <string>REDIS_PASSWORD,
   },
   squad: {
-    sandboxKey: <string>SQUAD_SANDBOX_KEY,
+    sandboxKey: <string>SQUAD_SANDBOX_SECRET_KEY,
+    liveKey: <string>SQUAD_LIVE_SECRET_KEY,
     merchantId: <string>SQUAD_MERCHANT_ID,
   },
 };

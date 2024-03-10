@@ -1,13 +1,15 @@
 import { v4 } from "uuid";
 import { PaymentAttemptModel } from "../models/payment-attempt.model";
 import { PurchasedTicketModel } from "../models/purchased-ticket.model";
-import { WebhookResponse } from "../schema/dto/payment.dto";
+import { AccountLookupDTO, WebhookResponse } from "../schema/dto/payment.dto";
 import { PaymentStatus, WebhookEvents } from "../schema/enums/payment.enum";
 import ServiceException from "../schema/exceptions/service.exception";
 import { TicketModel } from "../models/ticket.model";
 import { generateQrCode } from "../helpers/qrcode.helper";
 import { createPurchasedTicket } from "./ticket.service";
 import slugify from "../helpers/slugify.helper";
+import { banks } from "../constants/banks.const";
+import { lookupAccount } from "../helpers/payment.helper";
 
 export async function handleSuccessfulCharge(data: WebhookResponse) {
   /**
@@ -53,4 +55,10 @@ export async function getBanks(search: string) {
   const filteredBanks = banks.filter((bank) => slugify(bank.name).includes(slugify(search)));
 
   return filteredBanks;
+}
+
+export async function accountLookup(data: AccountLookupDTO) {
+  const accountInfo = await lookupAccount(data);
+
+  return accountInfo;
 }

@@ -26,7 +26,6 @@ export default function init(sequelize: Sequelize): typeof WalletTransactionMode
       },
       direction: {
         type: DataTypes.ENUM({ values: Object.values(WalletTransactionDirection) }),
-        allowNull: false,
       },
       amount: {
         type: DataTypes.DECIMAL,

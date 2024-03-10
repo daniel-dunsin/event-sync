@@ -11,3 +11,10 @@ export const getBanksInput = object({
     search: string().required("search is required in query"),
   }),
 });
+
+export const accountLookupInput = object({
+  body: object({
+    account_number: string().required(),
+    bank_code: string().required(),
+  }),
+});

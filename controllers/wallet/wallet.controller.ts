@@ -1,7 +1,8 @@
 import expressAsyncHandler from "express-async-handler";
-import { getUserWalletInfo, getWalletLogs } from "../../services/wallet.service";
+import { getUserWalletInfo, getWalletLogs, withdraw } from "../../services/wallet.service";
 import { Request } from "express";
 import { WalletTransactionDirection } from "../../schema/enums/payment.enum";
+import { WithdrawDTO } from "../../schema/dto/wallet.dto";
 
 export const getUserWalletInfoControllers = expressAsyncHandler(async (req, res) => {
   const userId = req.userId as number;
@@ -20,3 +21,11 @@ export const getWalletLogsController = expressAsyncHandler(
     res.status(200).json(data);
   }
 );
+
+export const withdrawController = expressAsyncHandler(async (req: Request<{}, {}, WithdrawDTO>, res) => {
+  const userId = req.userId as number;
+
+  const data = await withdraw({ ...req.body, userId });
+
+  res.status(200).json(data);
+});

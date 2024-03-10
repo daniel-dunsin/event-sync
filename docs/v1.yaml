@@ -682,7 +682,34 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/WalletLog"     
+                  $ref: "#/components/schemas/WalletLog" 
+  /wallet/withdraw:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                account_number:
+                  type: string
+                bank_code:
+                  type: string
+                account_name:
+                  type: string
+      security:
+        - bearer: []
+      tags: [wallet]
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WalletLog"     
 
 
 components:

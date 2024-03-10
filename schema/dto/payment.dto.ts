@@ -1,4 +1,5 @@
 import { WebhookEvents } from "../enums/payment.enum";
+import { WithdrawDTO } from "./wallet.dto";
 
 export interface PurchaseTicketDTO {
   ticketId: number;
@@ -36,4 +37,19 @@ export interface WebhookResponse {
     created_at: Date;
     is_recurring: boolean;
   };
+}
+
+export interface AccountLookupDTO {
+  account_number: string;
+  bank_code: string;
+}
+
+export interface AccountLookupResponse {
+  account_name: string;
+  account_number: string;
+}
+
+export interface WithdrawalRequest extends Omit<WithdrawDTO, "userId"> {
+  transaction_reference: string;
+  remark: string;
 }

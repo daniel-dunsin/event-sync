@@ -1,8 +1,9 @@
 import expressAsyncHandler from "express-async-handler";
-import { InitiateTransactionDTO, PurchaseTicketDTO, WebhookResponse } from "../../schema/dto/payment.dto";
+import { AccountLookupDTO, InitiateTransactionDTO, PurchaseTicketDTO, WebhookResponse } from "../../schema/dto/payment.dto";
 import { Request } from "express";
 import { purchaseTicket } from "../../services/ticket.service";
-import { getBanks, handleWebhook } from "../../services/payment.service";
+import { accountLookup, getBanks, handleWebhook } from "../../services/payment.service";
+import { validateWebhookSignature } from "../../helpers/payment.helper";
 
 export const purchaseTicketController = expressAsyncHandler(
   async (req: Request<{ id: string }, {}, PurchaseTicketDTO>, res, next) => {
@@ -18,6 +19,8 @@ export const purchaseTicketController = expressAsyncHandler(
 );
 
 export const handleWebhookController = expressAsyncHandler(async (req: Request<{}, {}, WebhookResponse>, res) => {
+  await validateWebhookSignature(JSON.stringify(req.body), req.headers["x-squad-encrypted-body"] as string);
+
   await handleWebhook(req.body);
 
   res.status(200).json({ message: "webhook don run" });
@@ -25,6 +28,12 @@ export const handleWebhookController = expressAsyncHandler(async (req: Request<{
 
 export const getBanksController = expressAsyncHandler(async (req: Request<{}, {}, {}, { search: string }>, res) => {
   const data = await getBanks(req.query.search);
+
+  res.status(200).json(data);
+});
+
+export const accountLookupController = expressAsyncHandler(async (req: Request<{}, {}, AccountLookupDTO>, res) => {
+  const data = await accountLookup(req.body);
 
   res.status(200).json(data);
 });

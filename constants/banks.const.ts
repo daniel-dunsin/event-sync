@@ -1,4 +1,6 @@
-const banks = [
+import { Bank } from "../schema/types/banks.type";
+
+export const banks: Bank[] = [
   { code: "000001", name: "Sterling Bank" },
   { code: "000002", name: "Keystone Bank" },
   { code: "000003", name: "FCMB" },

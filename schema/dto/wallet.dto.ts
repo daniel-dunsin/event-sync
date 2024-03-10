@@ -13,3 +13,11 @@ export interface GetWalletLogsDTO {
   direction?: WalletTransactionDirection;
   userId: number;
 }
+
+export interface WithdrawDTO {
+  userId: number;
+  amount: number;
+  account_number: string;
+  bank_code: string;
+  account_name: string;
+}

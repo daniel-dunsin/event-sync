@@ -9,7 +9,7 @@ export const paymentInstance = axios.create({
 });
 
 paymentInstance.interceptors.request.use((req) => {
-  req.headers.Authorization = `Bearer ${secrets.squad.sandboxKey}`;
+  req.headers.Authorization = `Bearer ${secrets.squad.liveKey}`;
 
   return req;
 });
