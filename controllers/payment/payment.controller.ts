@@ -2,7 +2,7 @@ import expressAsyncHandler from "express-async-handler";
 import { InitiateTransactionDTO, PurchaseTicketDTO, WebhookResponse } from "../../schema/dto/payment.dto";
 import { Request } from "express";
 import { purchaseTicket } from "../../services/ticket.service";
-import { handleWebhook } from "../../services/payment.service";
+import { getBanks, handleWebhook } from "../../services/payment.service";
 
 export const purchaseTicketController = expressAsyncHandler(
   async (req: Request<{ id: string }, {}, PurchaseTicketDTO>, res, next) => {
@@ -21,4 +21,10 @@ export const handleWebhookController = expressAsyncHandler(async (req: Request<{
   await handleWebhook(req.body);
 
   res.status(200).json({ message: "webhook don run" });
+});
+
+export const getBanksController = expressAsyncHandler(async (req: Request<{}, {}, {}, { search: string }>, res) => {
+  const data = await getBanks(req.query.search);
+
+  res.status(200).json(data);
 });

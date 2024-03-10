@@ -7,6 +7,7 @@ import ServiceException from "../schema/exceptions/service.exception";
 import { TicketModel } from "../models/ticket.model";
 import { generateQrCode } from "../helpers/qrcode.helper";
 import { createPurchasedTicket } from "./ticket.service";
+import slugify from "../helpers/slugify.helper";
 
 export async function handleSuccessfulCharge(data: WebhookResponse) {
   /**
@@ -46,4 +47,10 @@ export async function handleWebhook(data: WebhookResponse) {
     default:
       return "werey, your event no exist";
   }
+}
+
+export async function getBanks(search: string) {
+  const filteredBanks = banks.filter((bank) => slugify(bank.name).includes(slugify(search)));
+
+  return filteredBanks;
 }

@@ -594,7 +594,7 @@ paths:
                       type: number
                     user:
                       $ref: "#/components/schemas/User"
-
+  
   
 
   # ================ PAYMENT ============
@@ -628,7 +628,26 @@ paths:
                 properties:
                   checkout_url:
                     type: string
-
+  /payment/banks:
+    get:
+      tags: [payment]
+      security:
+        - bearer: []
+      parameters:
+        - in: query
+          name: search
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Bank"
 
   # ================ WALLET ==========
   /wallet:
@@ -762,6 +781,13 @@ components:
           type: number
         balance:
           type: number
+    Bank:
+      type: object
+      properties:
+        code:
+          type: number
+        name:
+          type: string
 
   securitySchemes:
     bearer:
