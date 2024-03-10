@@ -1,12 +1,12 @@
 import { DataTypes, Sequelize } from "sequelize";
-import { WalletTransactionClerk, WalletTransactionStatus } from "../schema/enums/payment.enum";
+import { WalletTransactionDirection, WalletTransactionStatus } from "../schema/enums/payment.enum";
 import BaseModel from "./base";
 import { v4 } from "uuid";
 
 export class WalletTransactionModel extends BaseModel {
   declare transaction_reference: string;
   declare walletId: number;
-  declare clerkType: WalletTransactionClerk;
+  declare direction: WalletTransactionDirection;
   declare amount: number;
   declare status: WalletTransactionStatus;
   declare reason: string;
@@ -24,8 +24,8 @@ export default function init(sequelize: Sequelize): typeof WalletTransactionMode
         type: DataTypes.BIGINT,
         allowNull: false,
       },
-      clerkType: {
-        type: DataTypes.ENUM({ values: Object.values(WalletTransactionClerk) }),
+      direction: {
+        type: DataTypes.ENUM({ values: Object.values(WalletTransactionDirection) }),
         allowNull: false,
       },
       amount: {

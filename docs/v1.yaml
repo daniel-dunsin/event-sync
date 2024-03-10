@@ -662,6 +662,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Wallet"
+  /wallet/logs:
+    get:
+      parameters:
+        - in: query
+          required: false
+          name: direction
+          schema:
+            type: string
+            example: credit | debit
+      security:
+        - bearer: []
+      tags: [wallet]
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/WalletLog"     
+
 
 components:
   schemas:
@@ -781,6 +803,24 @@ components:
           type: number
         balance:
           type: number
+    WalletLog:
+      type: object
+      properties:
+        walletId:
+          type: number
+        transaction_reference:
+          type: string
+        direction:
+          type: string
+          example: credit | debit
+        amount:
+          type: number
+        status: 
+          type: string
+          example: successful | pending | failed
+        reason:
+          type: string
+
     Bank:
       type: object
       properties:
@@ -788,7 +828,7 @@ components:
           type: number
         name:
           type: string
-
+  
   securitySchemes:
     bearer:
       type: http

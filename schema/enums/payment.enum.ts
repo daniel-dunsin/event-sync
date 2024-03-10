@@ -1,4 +1,4 @@
-export enum WalletTransactionClerk {
+export enum WalletTransactionDirection {
   CREDIT = "credit",
   DEBIT = "debit",
 }

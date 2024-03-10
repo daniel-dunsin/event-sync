@@ -6,7 +6,7 @@ import { PaymentAttemptModel } from "../models/payment-attempt.model";
 import { PurchaseTicketDTO } from "../schema/dto/payment.dto";
 import { UserModel } from "../models/user.model";
 import { initiateTransaction } from "../helpers/payment.helper";
-import { PaymentStatus, WalletTransactionClerk, WalletTransactionStatus } from "../schema/enums/payment.enum";
+import { PaymentStatus, WalletTransactionDirection, WalletTransactionStatus } from "../schema/enums/payment.enum";
 import { CreatePurchasedTicketDTO } from "../schema/dto/ticket.dto";
 import { generateQrCode } from "../helpers/qrcode.helper";
 import { PurchasedTicketModel } from "../models/purchased-ticket.model";
@@ -146,7 +146,7 @@ export async function createPurchasedTicket(data: CreatePurchasedTicketDTO) {
   await createWalletTransaction({
     amount,
     walletId: userWallet?.id,
-    clerkType: WalletTransactionClerk.CREDIT,
+    direction: WalletTransactionDirection.CREDIT,
     status: WalletTransactionStatus.SUCCESSFUL,
     reason: `Payment for ${ticket?.type?.toUpperCase()} ticket for ${event?.name}`,
   });
