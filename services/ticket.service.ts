@@ -148,6 +148,7 @@ export async function createPurchasedTicket(data: CreatePurchasedTicketDTO) {
     walletId: userWallet?.id,
     clerkType: WalletTransactionClerk.CREDIT,
     status: WalletTransactionStatus.SUCCESSFUL,
+    reason: `Payment for ${ticket?.type?.toUpperCase()} ticket for ${event?.name}`,
   });
 
   return purchasedTicket;

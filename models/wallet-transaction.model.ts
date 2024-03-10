@@ -9,6 +9,7 @@ export class WalletTransactionModel extends BaseModel {
   declare clerkType: WalletTransactionClerk;
   declare amount: number;
   declare status: WalletTransactionStatus;
+  declare reason: string;
 }
 
 export default function init(sequelize: Sequelize): typeof WalletTransactionModel {
@@ -35,6 +36,10 @@ export default function init(sequelize: Sequelize): typeof WalletTransactionMode
         type: DataTypes.ENUM({ values: Object.values(WalletTransactionStatus) }),
         allowNull: false,
         defaultValue: WalletTransactionStatus.PENDING,
+      },
+      reason: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
     },
     {

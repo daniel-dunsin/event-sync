@@ -32,3 +32,5 @@ export async function getUserWalletInfo(userId: number) {
 
   return wallet;
 }
+
+export async function getWalletLogs(userId: number) {}

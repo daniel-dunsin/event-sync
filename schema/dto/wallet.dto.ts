@@ -6,4 +6,5 @@ export interface CreateWalletTransactionDTO {
   amount: number;
   status: WalletTransactionStatus;
   transaction_reference?: string;
+  reason?: string;
 }
