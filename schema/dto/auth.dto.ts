@@ -10,7 +10,7 @@ export interface RegisterDTO {
 
 export interface FindOrCreateTokenDTO {
   email: string;
-  code: number;
+  code?: number;
   token: string;
   type: TokenType;
 }
@@ -27,7 +27,6 @@ export interface AuthResponse {
 
 export interface VerifyAccountDTO {
   token: string;
-  code: string;
 }
 
 export interface ResetPasswordDTO {

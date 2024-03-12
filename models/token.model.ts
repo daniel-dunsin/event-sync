@@ -18,7 +18,7 @@ export default function init(sequelize: Sequelize): typeof TokenModel {
       },
       code: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       type: {
         type: DataTypes.ENUM({ values: Object.values(TokenType) }),

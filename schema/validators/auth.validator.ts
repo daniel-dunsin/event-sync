@@ -25,7 +25,6 @@ export const googleAuthInput = object({
 export const verifyAccountInput = object({
   body: object({
     token: string().required(),
-    code: string().required(),
   }),
 });
 

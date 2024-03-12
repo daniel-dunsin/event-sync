@@ -20,6 +20,7 @@ import crypto from "crypto";
 import { google } from "googleapis";
 import redisCache from "./cache.service";
 import { createWallet } from "./wallet.service";
+import { generate as generateOTP } from "otp-generator";
 
 async function auth(user: UserModel): Promise<AuthResponse> {
   const accessToken = await jwtHelper.sign(user.id);
@@ -32,7 +33,7 @@ async function findOrCreateToken(data: FindOrCreateTokenDTO) {
 
   if (dbToken) {
     dbToken.token = data.token;
-    dbToken.code = data.code;
+    dbToken.code = data.code as number;
     return await dbToken.save();
   } else {
     return await TokenModel.create({ ...data });
@@ -47,27 +48,25 @@ export async function register(data: RegisterDTO) {
 
   const user = await UserModel.create({ firstName, lastName, email });
   await AuthModel.create({ email, password });
-  const token = v4();
-  const code = Math.floor(Math.random() * 999999999);
-  const link = `${secrets.frontendUrl}/verify-email/${code}/${token}`;
-  await findOrCreateToken({ email, token, code, type: TokenType.accountVerificationToken });
+  const token = generateOTP(5, { lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false });
+
+  await findOrCreateToken({ email, token, type: TokenType.accountVerificationToken });
 
   await createWallet(user.id);
 
   await sendMail({
     to: email,
     subject: "VERIFY ACCOUNT",
-    html: renderTemplate("verify-account.ejs", { link }),
+    html: renderTemplate("verify-account.ejs", { otp: token }),
   });
 }
 
 export async function verifyAccount(data: VerifyAccountDTO) {
-  const { token, code } = data;
+  const { token } = data;
 
   const dbToken = await TokenModel.findOne({
     where: {
       token,
-      code,
       type: TokenType.accountVerificationToken,
     },
   });

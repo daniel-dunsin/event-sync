@@ -10,7 +10,6 @@ info:
   description: API for an event management, booking and ticketing system
   version: 1.0.0
 
-
 paths:
   # ===================== AUTH =============
 
@@ -35,7 +34,7 @@ paths:
                   type: string
       responses:
         201:
-          $ref: '#/components/schemas/DefaultSuccess'
+          $ref: "#/components/schemas/DefaultSuccess"
   /auth/login:
     post:
       security: []
@@ -53,41 +52,17 @@ paths:
                   type: string
       responses:
         200:
-          description: 'Success Response'
+          description: "Success Response"
           content:
             application/json:
               schema:
                 type: object
                 properties:
                   user:
-                    $ref: '#/components/schemas/User'
+                    $ref: "#/components/schemas/User"
                   accessToken:
                     type: string
-    /auth/login:
-    post:
-      security: []
-      tags: [auth]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                accessToken:
-                  type: string
-      responses:
-        200:
-          description: 'Success Response'
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  user:
-                    $ref: '#/components/schemas/User'
-                  accessToken:
-                    type: string
+
   /auth/verify-account:
     post:
       security: []
@@ -101,11 +76,9 @@ paths:
               properties:
                 token:
                   type: string
-                code:
-                  type: number
       responses:
         201:
-          $ref: '#/components/schemas/DefaultSuccess'
+          $ref: "#/components/schemas/DefaultSuccess"
   /auth/forgot-password:
     post:
       security: []
@@ -121,7 +94,7 @@ paths:
                   type: string
       responses:
         200:
-          $ref: '#/components/schemas/DefaultSuccess'
+          $ref: "#/components/schemas/DefaultSuccess"
   /auth/reset-password:
     put:
       security: []
@@ -141,8 +114,7 @@ paths:
                   type: number
       responses:
         200:
-          $ref: '#/components/schemas/DefaultSuccess'
-  
+          $ref: "#/components/schemas/DefaultSuccess"
 
   # ===================== USER =============
   /user:
@@ -195,7 +167,6 @@ paths:
         200:
           $ref: "#/components/schemas/DefaultSuccess"
 
-
   # ===================== EVENT CATEGORY =============
   /event/category:
     post:
@@ -212,7 +183,7 @@ paths:
                 name: string
                 description: string
       responses:
-        201: 
+        201:
           description: success
           content:
             application/json:
@@ -222,7 +193,7 @@ paths:
       tags: ["event category"]
       security: []
       responses:
-        200: 
+        200:
           description: success
           content:
             application/json:
@@ -243,12 +214,12 @@ paths:
         - bearer: []
       requestBody:
         required: true
-        content: 
+        content:
           application/json:
             schema:
               type: object
               properties:
-                name: 
+                name:
                   type: string
                 description:
                   type: string
@@ -272,7 +243,6 @@ paths:
       responses:
         200:
           $ref: "#/components/schemas/DefaultSuccess"
-
 
   # ===================== EVENT =============
   /event:
@@ -326,7 +296,7 @@ paths:
                         type: string
                       type:
                         type: string
-                      url:  
+                      url:
                         type: string
                         example: "base64"
       responses:
@@ -335,7 +305,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Event"    
+                $ref: "#/components/schemas/Event"
     get:
       tags: [event]
       security: []
@@ -350,7 +320,7 @@ paths:
   /event/user:
     get:
       tags: [event]
-      security: 
+      security:
         - bearer: []
       responses:
         200:
@@ -379,7 +349,7 @@ paths:
                 $ref: "#/components/schemas/Event"
     delete:
       tags: [event]
-      security: 
+      security:
         - bearer: []
       responses:
         200:
@@ -442,11 +412,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  profit: 
+                  profit:
                     type: number
- 
- 
- 
+
   # ===================== TICKET =============
   /ticket/event/{id}:
     parameters:
@@ -475,7 +443,7 @@ paths:
                     type: string
                   totalNumber:
                     type: number
-                  price:  
+                  price:
                     type: number
       responses:
         200:
@@ -527,14 +495,14 @@ paths:
                   type: number
       responses:
         200:
-          $ref: "#/components/schemas/DefaultSuccess"      
+          $ref: "#/components/schemas/DefaultSuccess"
     delete:
       tags: [ticket]
       security:
         - bearer: []
       responses:
         200:
-          $ref: "#/components/schemas/DefaultSuccess"   
+          $ref: "#/components/schemas/DefaultSuccess"
     get:
       tags: [ticket]
       security:
@@ -545,7 +513,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Ticket"   
+                $ref: "#/components/schemas/Ticket"
   /ticket/event/{id}/stats:
     get:
       parameters:
@@ -590,12 +558,10 @@ paths:
                 items:
                   type: object
                   properties:
-                    ticketsCount: 
+                    ticketsCount:
                       type: number
                     user:
                       $ref: "#/components/schemas/User"
-  
-  
 
   # ================ PAYMENT ============
   /payment/purchase/ticket/{id}:
@@ -682,7 +648,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/WalletLog" 
+                  $ref: "#/components/schemas/WalletLog"
   /wallet/withdraw:
     post:
       requestBody:
@@ -709,14 +675,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/WalletLog"     
-
+                $ref: "#/components/schemas/WalletLog"
 
 components:
   schemas:
     # defaults
     DefaultSuccess:
-      description: 'Success Response'
+      description: "Success Response"
       content:
         application/json:
           schema:
@@ -725,7 +690,7 @@ components:
               message:
                 type: string
     DefaultError:
-      description: 'Error Response'
+      description: "Error Response"
       content:
         application/json:
           schema:
@@ -749,7 +714,7 @@ components:
     Category:
       type: object
       properties:
-        id: 
+        id:
           type: number
         name:
           type: string
@@ -807,15 +772,15 @@ components:
           type: string
         eventId:
           type: number
-    
-    Ticket: 
+
+    Ticket:
       type: object
       properties:
         type:
           type: string
         description:
           type: string
-        price: 
+        price:
           type: number
         totalNumber:
           type: number
@@ -842,7 +807,7 @@ components:
           example: credit | debit
         amount:
           type: number
-        status: 
+        status:
           type: string
           example: successful | pending | failed
         reason:
@@ -855,12 +820,11 @@ components:
           type: number
         name:
           type: string
-  
+
   securitySchemes:
     bearer:
       type: http
       scheme: bearer
-  
 
 tags:
   - name: auth
